@@ -1,0 +1,52 @@
+# Configuration for Fine-tuning with Pretrained Weights
+# Use this when you have a custom pretrained model (e.g., GastroNet-5M)
+
+data:
+  root_dir: "path/to/your/dataset"
+  nested_classes: true
+  image_size: 224
+  train_split: 0.8
+  num_workers: 4
+
+augmentation:
+  horizontal_flip: 0.5
+  vertical_flip: 0.3
+  rotation: 15
+  color_jitter:
+    brightness: 0.15
+    contrast: 0.15
+    saturation: 0.15
+    hue: 0.05
+  translate: [0.05, 0.05]
+
+model:
+  name: "resnet50"
+  pretrained: false  # Don't use ImageNet weights
+  pretrained_path: "models/gastronet_5m.pth"  # Your custom pretrained model
+  freeze_features: true  # Freeze feature extractor, only train classifier head
+  freeze_layers: 0  # Not used when freeze_features is true
+
+training:
+  epochs: 30  # Fewer epochs needed for fine-tuning
+  batch_size: 32
+  learning_rate: 0.0001  # Lower learning rate for fine-tuning
+  weight_decay: 0.0001
+  optimizer: "adam"
+  
+  scheduler:
+    type: "cosine"  # Cosine annealing works well for fine-tuning
+    min_lr: 1e-6
+  
+  early_stopping:
+    enabled: true
+    patience: 8
+    min_delta: 0.001
+
+checkpoint:
+  save_dir: "checkpoints/finetuned"
+  save_best: true
+  save_every: 5
+
+logging:
+  log_dir: "logs/finetuned"
+  print_freq: 10
