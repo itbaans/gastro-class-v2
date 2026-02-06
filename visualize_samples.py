@@ -10,7 +10,19 @@ from pathlib import Path
 
 import torch
 import numpy as np
+
+# Setup matplotlib for inline display in notebooks
+import matplotlib
+matplotlib.use('Agg')  # Use Agg backend for figure generation
 import matplotlib.pyplot as plt
+
+# Try to import IPython display for better notebook support
+try:
+    from IPython.display import display, Image as IPImage
+    IPYTHON_AVAILABLE = True
+except ImportError:
+    IPYTHON_AVAILABLE = False
+
 from torchvision import transforms
 
 # Add project root to path
@@ -188,6 +200,11 @@ def main():
                 save_path = None
                 if config['visualization']['save_images']:
                     save_path = str(output_dir / f"{class_name}_{img_name}_gradcam.png")
+                else:
+                    # Create temporary file for display even if not saving permanently
+                    import tempfile
+                    temp_file = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+                    save_path = temp_file.name
                 
                 # Generate Grad-CAM
                 print(f"  [{processed}/{total_images}] Processing: {img_name}")
@@ -198,15 +215,31 @@ def main():
                     image_original=image_original,
                     target_layer=target_layer,
                     class_names=class_names,
-                    save_path=save_path,
+                    save_path=save_path,  # Always save to show
                     device=device
                 )
                 
-                # Display inline if requested (for notebooks)
-                if config['visualization']['display_inline'] and not config['visualization']['save_images']:
-                    plt.show()
-                
                 print(f"    Predicted: {class_names[pred_class]} (Confidence: {confidence:.2%})")
+                
+                # Display the saved figure in Kaggle/Jupyter
+                if config['visualization']['display_inline']:
+                    if IPYTHON_AVAILABLE:
+                        # Use IPython display for better rendering
+                        display(IPImage(filename=save_path))
+                    else:
+                        # Fallback: load and show the saved image
+                        img = plt.imread(save_path)
+                        plt.figure(figsize=config['visualization']['figsize'])
+                        plt.imshow(img)
+                        plt.axis('off')
+                        plt.tight_layout()
+                        plt.show()
+                        plt.close()
+                
+                # Clean up temporary file if not saving permanently
+                if not config['visualization']['save_images']:
+                    import os
+                    os.unlink(save_path)
                 
             except Exception as e:
                 print(f"    Error: {e}")
