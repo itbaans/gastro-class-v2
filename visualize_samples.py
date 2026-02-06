@@ -224,11 +224,13 @@ def main():
                 # Display the saved figure in Kaggle/Jupyter
                 if config['visualization']['display_inline']:
                     if IPYTHON_AVAILABLE:
-                        # Use IPython display for better rendering
-                        display(IPImage(filename=save_path))
+                        # Use IPython display for better rendering - force display
+                        from IPython.display import display as ipy_display
+                        ipy_display(IPImage(filename=save_path))
                     else:
-                        # Fallback: load and show the saved image
-                        img = plt.imread(save_path)
+                        # Fallback: Use PIL to show image
+                        from PIL import Image as PILImage
+                        img = PILImage.open(save_path)
                         plt.figure(figsize=config['visualization']['figsize'])
                         plt.imshow(img)
                         plt.axis('off')
@@ -239,7 +241,12 @@ def main():
                 # Clean up temporary file if not saving permanently
                 if not config['visualization']['save_images']:
                     import os
-                    os.unlink(save_path)
+                    import time
+                    time.sleep(0.1)  # Small delay to ensure display is complete
+                    try:
+                        os.unlink(save_path)
+                    except:
+                        pass  # Ignore if file is still in use
                 
             except Exception as e:
                 print(f"    Error: {e}")

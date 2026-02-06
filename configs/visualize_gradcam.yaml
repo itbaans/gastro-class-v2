@@ -17,9 +17,9 @@ data:
 visualization:
   samples_per_class: 3  # Number of random samples to visualize per class
   seed: 42  # Random seed for reproducibility
-  display_inline: true  # Display visualizations inline (for notebooks)
-  save_images: false  # Set to true if you want to save images
-  output_dir: "gradcam_results"  # Directory to save (if save_images is true)
+  display_inline: false  # Display visualizations inline (only works in notebook cells, not scripts)
+  save_images: true  # Save images to output directory
+  output_dir: "gradcam_results"  # Directory to save visualizations
   alpha: 0.5  # Heatmap overlay transparency (0-1)
   colormap: "jet"  # Colormap for heatmap (jet, hot, viridis, etc.)
   figsize: [15, 5]  # Figure size for each visualization
