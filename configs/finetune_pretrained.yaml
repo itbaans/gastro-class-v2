@@ -35,7 +35,7 @@ training:
   
   scheduler:
     type: "cosine"  # Cosine annealing works well for fine-tuning
-    min_lr: 1e-6
+    min_lr: 0.000001  # Minimum learning rate (1e-6)
   
   early_stopping:
     enabled: true

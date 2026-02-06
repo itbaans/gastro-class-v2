@@ -93,7 +93,7 @@ def get_default_config() -> Dict[str, Any]:
                 'type': 'step',  # step, cosine, or None
                 'step_size': 10,  # For StepLR
                 'gamma': 0.1,  # For StepLR
-                'min_lr': 1e-6  # For CosineAnnealingLR
+                'min_lr': 1e-6  # For CosineAnnealingLR (float, not string)
             },
             'early_stopping': {
                 'enabled': True,

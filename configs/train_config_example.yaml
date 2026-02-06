@@ -45,7 +45,7 @@ training:
     type: "step"  # Options: step, cosine, null (no scheduler)
     step_size: 10  # For StepLR: reduce LR every N epochs
     gamma: 0.1  # For StepLR: multiply LR by this factor
-    min_lr: 1e-6  # For CosineAnnealingLR: minimum learning rate
+    min_lr: 0.000001  # For CosineAnnealingLR: minimum learning rate (1e-6)
   
   # Early stopping
   early_stopping:
