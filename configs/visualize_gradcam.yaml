@@ -1,0 +1,25 @@
+# Grad-CAM Visualization Configuration
+# Generate Grad-CAM visualizations for random samples from each class
+
+# Model Configuration
+model:
+  checkpoint_path: "checkpoints/finetuned/best_model.pth"  # Path to trained model checkpoint
+  model_name: "resnet50"  # Model architecture
+  num_classes: null  # Auto-detected from checkpoint
+
+# Data Configuration
+data:
+  root_dir: "/kaggle/input/kvasir-v2-a-gastrointestinal-tract-dataset"  # Dataset directory
+  nested_classes: true  # Match your training data structure
+  image_size: 224  # Image size (should match training)
+
+# Visualization Configuration
+visualization:
+  samples_per_class: 3  # Number of random samples to visualize per class
+  seed: 42  # Random seed for reproducibility
+  display_inline: true  # Display visualizations inline (for notebooks)
+  save_images: false  # Set to true if you want to save images
+  output_dir: "gradcam_results"  # Directory to save (if save_images is true)
+  alpha: 0.5  # Heatmap overlay transparency (0-1)
+  colormap: "jet"  # Colormap for heatmap (jet, hot, viridis, etc.)
+  figsize: [15, 5]  # Figure size for each visualization
