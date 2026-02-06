@@ -2,7 +2,7 @@
 # Use this when you have a custom pretrained model (e.g., GastroNet-5M)
 
 data:
-  root_dir: "path/to/your/dataset"
+  root_dir: "/kaggle/input/kvasir-v2-a-gastrointestinal-tract-dataset"
   nested_classes: true
   image_size: 224
   train_split: 0.8
@@ -22,7 +22,7 @@ augmentation:
 model:
   name: "resnet50"
   pretrained: false  # Don't use ImageNet weights
-  pretrained_path: "models/gastronet_5m.pth"  # Your custom pretrained model
+  pretrained_path: "/kaggle/input/gastro5m-models/other/default/1/Gastro5m-Models/RN50_GastroNet-5M_DINOv1.pth"  # Your custom pretrained model
   freeze_features: true  # Freeze feature extractor, only train classifier head
   freeze_layers: 0  # Not used when freeze_features is true
 
