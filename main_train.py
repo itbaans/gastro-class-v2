@@ -1,6 +1,6 @@
 """
 Main training script for GastroClassTraining
-Run with: python train.py --config configs/train_config_example.yaml
+Run with: python main_train.py --config configs/train_config_example.yaml
 """
 
 import argparse

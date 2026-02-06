@@ -26,13 +26,13 @@ training:
 
 ```bash
 # Basic training
-python train.py --config configs/train_config_example.yaml
+python main_train.py --config configs/train_config_example.yaml
 
 # Fine-tune with pretrained model
-python train.py --config configs/finetune_pretrained.yaml
+python main_train.py --config configs/finetune_pretrained.yaml
 
 # Quick test run (override epochs)
-python train.py --config configs/quick_train.yaml --epochs 5
+python main_train.py --config configs/quick_train.yaml --epochs 5
 ```
 
 ## Dataset Structure
@@ -96,7 +96,7 @@ early_stopping:
 
 ### 1. Train from Scratch with ImageNet Weights
 ```bash
-python train.py --config configs/train_config_example.yaml
+python main_train.py --config configs/train_config_example.yaml
 ```
 
 ### 2. Fine-tune Custom Pretrained Model
@@ -104,7 +104,7 @@ python train.py --config configs/train_config_example.yaml
 # Edit configs/finetune_pretrained.yaml:
 # - Set pretrained_path: models/gastronet_5m.pth
 # - Set freeze_features: true (optional)
-python train.py --config configs/finetune_pretrained.yaml
+python main_train.py --config configs/finetune_pretrained.yaml
 ```
 
 ### 3. Resume Training from Checkpoint
@@ -112,7 +112,7 @@ python train.py --config configs/finetune_pretrained.yaml
 # Edit config:
 # checkpoint:
 #   resume_from: checkpoints/checkpoint_epoch_20.pth
-python train.py --config your_config.yaml
+python main_train.py --config your_config.yaml
 ```
 
 ## Output Files
@@ -130,7 +130,7 @@ Saved in `log_dir` (default: `logs/`):
 ## Command Line Arguments
 
 ```bash
-python train.py \
+python main_train.py \
   --config configs/your_config.yaml \  # Required
   --epochs 100 \                        # Override config epochs
   --batch-size 64 \                     # Override config batch size
