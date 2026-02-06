@@ -110,6 +110,7 @@ def main():
         freeze_layers=config['model']['freeze_layers'],
         device=device
     )
+    print(f"Model loaded on device: {next(model.parameters()).device}")
     
     # Create loss function
     criterion = nn.CrossEntropyLoss()
